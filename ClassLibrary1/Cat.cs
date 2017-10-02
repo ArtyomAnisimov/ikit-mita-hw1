@@ -4,16 +4,30 @@ namespace Model
 {
     public class Cat
     {
+        public Cat(byte Age)
+        {
+            _age = Age;
+        }
+        private bye _age;
         private string _name;
         //Один раз задаваемое имя
         public string Name
         {
             get { return _name; }
+            //логика для присваивания имени если его нет
             set
-            { _name = value; }
+            {
+                //Проверяем значение переменной
+                if (_name.ToString() == "")
+                {
+                    _name = value;
+                }
+                else 
+                {throw new System.InvalidOperationException("This field can't be rewrite!");}
+            }
         }
         //Сделать поле только для чтения
-        public byte Age { get; private set; }
+        //public byte Age { get; private set; }
         private sbyte _health = 0;
         //вычисляемое поле: красный < 5, желтый = 5, зеленый > 5 
         public string Color
@@ -42,13 +56,14 @@ namespace Model
         {
             do
             {
-                if (Age == 0)
+                //Убрать(в классе нельзя менять возраст readOnly Property, задается в конструкторе класса)
+                if (_age == 0)
                 {
 
                     Console.Write("Перед покупкой\nВведите возраст кошки: ");
                     try
                     {
-                        Age = Byte.Parse(Console.ReadLine());
+                        _age = Byte.Parse(Console.ReadLine());
                         return;
                     }
 
